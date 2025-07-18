@@ -1,0 +1,19 @@
+@use '@angular/material' as mat;
+
+.main {
+  height: 100%;
+}
+
+.side-nav {
+  height: 100%;
+  overflow: auto;
+  background-color: var(--mat-sys-primary-container);
+  border-radius: 0;
+  padding: 1rem;
+  display: flex;
+
+  .title {
+    margin-top: 0;
+    text-align: center;
+  }
+}
