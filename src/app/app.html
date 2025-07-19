@@ -1,16 +1,18 @@
 <mat-drawer-container class="main">
   <mat-drawer class="side-nav" mode="side" opened>
-    <h3 class="title">Why Do Boys Make Tiers?</h3>
-    <mat-divider/>
-    <mat-button-toggle-group [formControl]="activePositionControl" class="position-toggle-group">
+    <h3 class="side-nav__title">Why Do Boys Make Tiers?</h3>
+    <mat-button-toggle-group hideSingleSelectionIndicator [formControl]="activeCategoryControl" class="side-nav__position-toggle-group">
       @for (cat of playerCategories(); track cat.position) {
         <mat-button-toggle
-          class="position-toggle-group__item"
-          [value]="cat.position">
+          class="side-nav__position-toggle-group__item"
+          [value]="cat">
           {{ cat.position }}
         </mat-button-toggle>
       }
     </mat-button-toggle-group>
+    <div class="side-nav__player-list">
+      <app-player-list [players]="activePlayerPool()"/>
+    </div>
   </mat-drawer>
   <mat-drawer-content>
     <router-outlet/>
