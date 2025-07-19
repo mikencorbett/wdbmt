@@ -2,7 +2,15 @@
   <mat-drawer class="side-nav" mode="side" opened>
     <h3 class="title">Why Do Boys Make Tiers?</h3>
     <mat-divider/>
-    Drawer content
+    <mat-button-toggle-group [formControl]="activePositionControl" class="position-toggle-group">
+      @for (cat of playerCategories(); track cat.position) {
+        <mat-button-toggle
+          class="position-toggle-group__item"
+          [value]="cat.position">
+          {{ cat.position }}
+        </mat-button-toggle>
+      }
+    </mat-button-toggle-group>
   </mat-drawer>
   <mat-drawer-content>
     <router-outlet/>
