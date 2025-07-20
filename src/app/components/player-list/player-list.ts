@@ -1,12 +1,34 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PlayerInfo } from '../../api/player-info';
+import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-player-list',
-  imports: [],
+  imports: [
+    CdkDropList,
+    CdkDrag
+  ],
   templateUrl: './player-list.html',
   styleUrl: './player-list.scss'
 })
 export class PlayerList {
   @Input() players: PlayerInfo[] = [];
+  @Input() listId: string = '';
+  @Input() connectedListIds: string[] = [];
+  @Output() itemDropped = new EventEmitter<CdkDragDrop<string[]>>();
+
+  ngOnInit() {
+    console.log('List ID:', this.listId);
+    console.log('Connected Lists:', this.connectedListIds);
+  }
+
+
+  @Output() playerDrop = new EventEmitter<CdkDragDrop<PlayerInfo[]>>();
+
+  drop(event: CdkDragDrop<PlayerInfo[]>) {
+    console.log(event);
+    this.playerDrop.emit(event);
+  }
+
+
 }

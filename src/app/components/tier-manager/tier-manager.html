@@ -1,2 +1,22 @@
-<h1>hello</h1>
+@if (tiers.length && connectedListIds.length) {
+  <div class="tier-manager-container">
+    @for (tier of tiers; track $index) {
+      <mat-card
+        class="tier-manager-container__item"
+        cdkDrag
+        [cdkDragData]="tier">
+        <mat-card-header cdkDragHandle>
+          <mat-card-title>Tier {{ $index }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <app-player-list
+            [listId]="'tier-' + $index"
+            [players]="tier.players"
+            [connectedListIds]="connectedListIds"
+            (playerDrop)="handlePlayerDrop($event)"/>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+}
 

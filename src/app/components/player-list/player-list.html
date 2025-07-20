@@ -1,7 +1,23 @@
-<div class="player-list">
+<div
+  class="player-list"
+  cdkDropList
+  [cdkDropListData]="players"
+  [cdkDropListConnectedTo]="connectedListIds"
+  [id]="listId"
+  (cdkDropListDropped)="drop($event)">
   @for (player of players; track player.name) {
-    <div class="player-list__item">
-      {{player.name}}
+    <div class="player-list__item" cdkDrag>
+      <div class="name-container">
+        <span>{{ player.name }}</span>
+        <span>{{ player.team }}</span>
+      </div>
+      <span>BYE {{ player.byeWeek }}</span>
+    </div>
+  }
+  <!-- TODO: make a more elegant/less ugly placeholder for empty drop zones.-->
+  @if (!players.length) {
+    <div class="empty-placeholder">
+      Drop players here
     </div>
   }
 </div>
