@@ -11,10 +11,10 @@
       }
     </mat-button-toggle-group>
     <div class="side-nav__player-list">
-      <app-player-list [players]="activePlayerPool()"/>
+      <app-player-list listId="primary-list" [connectedListIds]="connectedListIds" [players]="activePlayerPool()"/>
     </div>
   </mat-drawer>
   <mat-drawer-content>
-    <router-outlet/>
+    <app-tier-manager [connectedListIds]="connectedListIds" [tiers]="tiers"/>
   </mat-drawer-content>
 </mat-drawer-container>

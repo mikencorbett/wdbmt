@@ -16,17 +16,9 @@ export class PlayerList {
   @Input() listId: string = '';
   @Input() connectedListIds: string[] = [];
   @Output() itemDropped = new EventEmitter<CdkDragDrop<string[]>>();
-
-  ngOnInit() {
-    console.log('List ID:', this.listId);
-    console.log('Connected Lists:', this.connectedListIds);
-  }
-
-
   @Output() playerDrop = new EventEmitter<CdkDragDrop<PlayerInfo[]>>();
 
   drop(event: CdkDragDrop<PlayerInfo[]>) {
-    console.log(event);
     this.playerDrop.emit(event);
   }
 

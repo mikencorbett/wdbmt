@@ -6,6 +6,8 @@
   flex-flow: row wrap;
 
   &__item {
+    min-height: 30rem;
+    width: 15rem;
     max-height: 50%;
     overflow: auto;
     flex: 1;
