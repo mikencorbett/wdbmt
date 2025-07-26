@@ -6,11 +6,21 @@
 }
 
 .side-nav {
+  width: 25%;
   height: 100%;
   background-color: var(--mat-sys-primary-container);
   border-radius: 0;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+
+  &__header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: var(--mat-sys-primary-container);
+  }
+
 
   &__title {
     text-align: center;
@@ -19,11 +29,10 @@
   &__position-toggle-group {
     flex: 0 1 auto;
     border-radius: 0;
-    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    gap: 0;
+
     &__item {
       text-align: center;
       width: 100%;
@@ -32,5 +41,10 @@
 
   &__player-list {
     flex: 1 1 auto;
+    padding: .5rem;
   }
+}
+
+.content {
+  width: 75%;
 }

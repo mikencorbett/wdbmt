@@ -1,12 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PlayerInfo } from '../../api/player-info';
 import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-player-list',
   imports: [
     CdkDropList,
-    CdkDrag
+    CdkDrag,
+    NgClass
   ],
   templateUrl: './player-list.html',
   styleUrl: './player-list.scss'

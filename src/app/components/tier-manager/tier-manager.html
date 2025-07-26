@@ -8,7 +8,7 @@
         <mat-card-header cdkDragHandle>
           <mat-card-title>Tier {{ $index }}</mat-card-title>
         </mat-card-header>
-        <mat-card-content>
+        <mat-card-content class="tier-manager-container__item--content">
           <app-player-list
             [listId]="'tier-' + $index"
             [players]="tier.players"
