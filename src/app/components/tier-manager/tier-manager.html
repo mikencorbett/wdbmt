@@ -1,12 +1,13 @@
 @if (tiers.length && connectedListIds.length) {
-  <div class="tier-manager-container">
+  <div class="tier-manager-container" cdkDropList cdkDropListOrientation="mixed" (cdkDropListDropped)="drop($event)">
     @for (tier of tiers; track $index) {
       <mat-card
         class="tier-manager-container__item"
         cdkDrag
         [cdkDragData]="tier">
-        <mat-card-header cdkDragHandle>
+        <mat-card-header class="tier-manager-container__item--header">
           <mat-card-title>Tier {{ $index }}</mat-card-title>
+          <mat-icon class="tier-manager-container__item--header--icon" cdkDragHandle>drag_indicator</mat-icon>
         </mat-card-header>
         <mat-card-content class="tier-manager-container__item--content">
           <app-player-list

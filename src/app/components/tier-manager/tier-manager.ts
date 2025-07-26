@@ -4,11 +4,12 @@ import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/m
 import {
   CdkDrag,
   CdkDragDrop,
-  CdkDragHandle,
+  CdkDragHandle, CdkDropList, CdkDropListGroup,
   moveItemInArray, transferArrayItem
 } from '@angular/cdk/drag-drop';
 import { PlayerList } from '../player-list/player-list';
 import { PlayerInfo } from '../../api/player-info';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-tier-manager',
@@ -19,17 +20,18 @@ import { PlayerInfo } from '../../api/player-info';
     MatCardContent,
     PlayerList,
     CdkDragHandle,
-    CdkDrag
+    CdkDrag,
+    CdkDropList,
+    MatIcon
   ],
   templateUrl: './tier-manager.html',
   styleUrl: './tier-manager.scss'
 })
 export class TierManager {
-  @Input({ required: true }) tiers: Tier[] = [];
-  @Input({ required: true }) connectedListIds: string[] = [];
+  @Input({required: true}) tiers: Tier[] = [];
+  @Input({required: true}) connectedListIds: string[] = [];
 
   drop(event: CdkDragDrop<Tier[]>) {
-    console.log(event);
     moveItemInArray(this.tiers, event.previousIndex, event.currentIndex);
   }
 

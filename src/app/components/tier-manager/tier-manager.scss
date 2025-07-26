@@ -9,7 +9,17 @@
     flex-direction: column;
     height: 45rem;
     flex-basis: 20%;
-
+    gap: .5rem;
+    &--header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      &--icon {
+        &:hover {
+          cursor: grab;
+        }
+      }
+    }
     &--content {
       height: 100%;
     }
