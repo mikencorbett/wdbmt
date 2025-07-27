@@ -4,7 +4,7 @@ export interface Tier {
   players: PlayerInfo[];
 }
 
-interface TierGroup {
+export interface TierGroup {
   position: string;
   tiers: Tier[];
 }

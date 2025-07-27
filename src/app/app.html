@@ -13,10 +13,12 @@
       </mat-button-toggle-group>
     </div>
     <div class="side-nav__player-list">
-      <app-player-list listId="primary-list" [connectedListIds]="connectedListIds" [players]="activePlayerPool()"/>
+      <app-player-list listId="primary-list" [connectedListIds]="connectedListIds" [players]="playerPool()"/>
     </div>
   </mat-drawer>
   <mat-drawer-content class="content">
-    <app-tier-manager [connectedListIds]="connectedListIds" [tiers]="tiers"/>
+    @if (activeCategoryControl.value) {
+      <app-tier-manager [activeCategory]="activeCategoryControl.value.position" [connectedListIds]="connectedListIds" [tiers]="tiers"/>
+    }
   </mat-drawer-content>
 </mat-drawer-container>

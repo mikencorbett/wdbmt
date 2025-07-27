@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, OnInit, Signal, signal, WritableSignal } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { Players } from './api/players';
@@ -10,6 +10,8 @@ import { PlayerList } from './components/player-list/player-list';
 import { PlayerInfo } from './api/player-info';
 import { TierManager } from './components/tier-manager/tier-manager';
 import { Tier } from './components/tier';
+import { LocalStorage } from './api/local-storage';
+import { Position } from './api/position';
 
 @Component({
   selector: 'app-root',
@@ -27,11 +29,26 @@ import { Tier } from './components/tier';
 export class App implements OnInit {
   tiers: Tier[] = [];
   connectedListIds: string[] = [];
+  private readonly localStorageService = inject(LocalStorage);
   readonly playerCategories: WritableSignal<PlayerCategory[]> = signal([]);
-  readonly activePlayerPool: WritableSignal<PlayerInfo[]> = signal([]);
   readonly activeCategoryControl = new FormControl<PlayerCategory | null>(null);
-  private readonly players = inject(Players);
   private readonly destroyRef$ = inject(DestroyRef);
+  readonly activeCategorySignal: WritableSignal<PlayerCategory | null> = signal(this.activeCategoryControl.value);
+  readonly playerPool: Signal<PlayerInfo[]> = computed(() => {
+    const activeCategory = this.activeCategorySignal();
+    if (!activeCategory) {
+      return [];
+    }
+    const usedPlayers = this.localStorageService.savedTiers()?.filter(t => t.position === activeCategory.position)
+      .map(g => g.tiers.map(t => t.players).flat()).flat().map(p => p.name);
+    if (!usedPlayers) {
+      return activeCategory.players;
+    } else {
+      return activeCategory.players.filter(p => !usedPlayers.includes(p.name));
+    }
+  });
+
+  private readonly players = inject(Players);
 
   ngOnInit(): void {
     this.subscribeToActivePositionChanges();
@@ -46,8 +63,8 @@ export class App implements OnInit {
         takeUntilDestroyed(this.destroyRef$)
       )
       .subscribe(cat => {
-        this.activePlayerPool.set(cat.players);
-        this.loadTiers();
+        this.activeCategorySignal.set(cat);
+        this.loadTiers(cat?.position);
       })
   }
 
@@ -63,9 +80,16 @@ export class App implements OnInit {
     })
   }
 
-  private loadTiers(): void {
-    //TODO: load from localstorage, default values if unavailable
-    this.setDefaultTiers();
+  private loadTiers(category: Position): void {
+    if (this.localStorageService.savedTiers() === null) {
+      this.setDefaultTiers();
+      return;
+    }
+    if (this.localStorageService.savedTiers()?.some(v => v.position === category && v.tiers.length)) {
+      this.tiers = this.localStorageService.savedTiers()?.filter(tg => tg.position === category).map(g => g.tiers).flat() ?? [];
+    } else {
+      this.setDefaultTiers();
+    }
     this.setConnectedListIds();
   }
 
