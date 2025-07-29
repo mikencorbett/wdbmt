@@ -13,6 +13,7 @@ import { MatIcon } from '@angular/material/icon';
 import { LocalStorage } from '../../api/local-storage';
 import { PlayerCategory } from '../../api/player-category';
 import { Position } from '../../api/position';
+import { DragDropService } from '../../api/drag-drop';
 
 @Component({
   selector: 'app-tier-manager',
@@ -36,6 +37,7 @@ export class TierManager {
   @Input({ required: true }) activeCategory: Position = Position.qb;
 
   private readonly localStorageService = inject(LocalStorage);
+  private readonly dragDropService = inject(DragDropService);
 
   drop(event: CdkDragDrop<Tier[]>) {
     moveItemInArray(this.tiers, event.previousIndex, event.currentIndex);
@@ -43,19 +45,7 @@ export class TierManager {
   }
 
   handlePlayerDrop(event: CdkDragDrop<PlayerInfo[]>) {
-    const fromList = event.previousContainer.data;
-    const toList = event.container.data;
-
-    if (event.previousContainer !== event.container) {
-      transferArrayItem(
-        fromList,
-        toList,
-        event.previousIndex,
-        event.currentIndex
-      );
-    } else {
-      moveItemInArray(toList, event.previousIndex, event.currentIndex);
-    }
+    this.dragDropService.handleDragDrop(event);
     this.saveTiers();
   }
 

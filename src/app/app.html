@@ -13,7 +13,7 @@
       </mat-button-toggle-group>
     </div>
     <div class="side-nav__player-list">
-      <app-player-list listId="primary-list" [connectedListIds]="connectedListIds" [players]="playerPool()"/>
+      <app-player-list listId="primary-list" [connectedListIds]="connectedListIds" [players]="playerPool()" (playerDrop)="handlePlayerDrop($event)"/>
     </div>
   </mat-drawer>
   <mat-drawer-content class="content">

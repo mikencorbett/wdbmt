@@ -8,7 +8,8 @@ import { Position } from './position';
 export class LocalStorage {
   private readonly WDBMT_LOCAL_STORAGE_KEY = 'wdbmt-tier-';
   private readonly positions = Position;
-  readonly savedTiers: WritableSignal<TierGroup[] | null> = signal(null)
+  readonly savedTiers: WritableSignal<TierGroup[] | null> = signal(null);
+
   saveTier(position: Position, tiers: Tier[]): void {
     localStorage.setItem(`${this.WDBMT_LOCAL_STORAGE_KEY}-${position}`, JSON.stringify(tiers));
   }

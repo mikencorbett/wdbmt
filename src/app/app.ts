@@ -12,6 +12,8 @@ import { TierManager } from './components/tier-manager/tier-manager';
 import { Tier } from './components/tier';
 import { LocalStorage } from './api/local-storage';
 import { Position } from './api/position';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { DragDropService } from './api/drag-drop';
 
 @Component({
   selector: 'app-root',
@@ -30,6 +32,7 @@ export class App implements OnInit {
   tiers: Tier[] = [];
   connectedListIds: string[] = [];
   private readonly localStorageService = inject(LocalStorage);
+  private readonly dragDropService = inject(DragDropService);
   readonly playerCategories: WritableSignal<PlayerCategory[]> = signal([]);
   readonly activeCategoryControl = new FormControl<PlayerCategory | null>(null);
   private readonly destroyRef$ = inject(DestroyRef);
@@ -53,6 +56,19 @@ export class App implements OnInit {
   ngOnInit(): void {
     this.subscribeToActivePositionChanges();
     this.initPlayerData();
+  }
+
+  handlePlayerDrop(event: CdkDragDrop<PlayerInfo[]>) {
+    this.dragDropService.handleDragDrop(event)
+    this.saveTiers();
+  }
+
+  private saveTiers(): void {
+    const position = this.activeCategorySignal()?.position;
+    if (!position) {
+      return
+    }
+    this.localStorageService.saveTier(position, this.tiers);
   }
 
   private subscribeToActivePositionChanges(): void {
