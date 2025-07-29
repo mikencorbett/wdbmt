@@ -4,8 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --base-href /wdbmt/",
     "watch": "ng build --watch --configuration development",
+    "deploy": "ng build --base-href /wdbmt/ --configuration production && npx angular-cli-ghpages --dir=dist/wdbmt/browser",
     "test": "ng test"
   },
   "prettier": {

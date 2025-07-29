@@ -7,14 +7,17 @@
   &__item {
     display: flex;
     flex-direction: column;
-    height: 45rem;
-    flex-basis: 20%;
+    min-height: 30rem;
+    flex-basis: 15%;
     gap: .5rem;
+
     &--header {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-
+      &--label {
+        margin: 0;
+      }
       &--icon {
         &:hover {
           cursor: grab;

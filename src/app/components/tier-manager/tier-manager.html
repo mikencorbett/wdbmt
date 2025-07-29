@@ -6,7 +6,7 @@
         cdkDrag
         [cdkDragData]="tier">
         <mat-card-header class="tier-manager-container__item--header">
-          <mat-card-title>Tier {{ $index }}</mat-card-title>
+          <mat-card-title><h3 class="tier-manager-container__item--header--label">Tier {{ $index + 1 }}</h3></mat-card-title>
           <mat-icon class="tier-manager-container__item--header--icon" cdkDragHandle>drag_indicator</mat-icon>
         </mat-card-header>
         <mat-card-content class="tier-manager-container__item--content">
