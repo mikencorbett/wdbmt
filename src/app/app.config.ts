@@ -5,12 +5,14 @@ import {
   provideZonelessChangeDetection
 } from '@angular/core';
 import { LocalStorage } from './api/local-storage';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    provideAppInitializer(initializeApp)
+    provideAppInitializer(initializeApp),
+    provideAnimationsAsync()
   ]
 };
 

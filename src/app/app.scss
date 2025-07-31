@@ -6,18 +6,19 @@
 }
 
 .side-nav {
-  width: 15%;
+  width: 20%;
   height: 100%;
   border-radius: 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  background: var(--mat-sys-surface-container);
 
   &__header {
     position: sticky;
     top: 0;
     z-index: 1;
-    background-color: var(--mat-sys-surface);
+    background-color: var(--mat-sys-surface-container);
   }
 
 
@@ -45,5 +46,5 @@
 }
 
 .content {
-  width: 85%;
+  width: 80%;
 }
