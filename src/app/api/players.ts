@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Injectable, signal, Signal } from '@angular/core';
 import { quarterbacks } from './data/quarterbacks';
 import { runningBacks } from './data/running-backs';
 import { receivers } from './data/receivers';
@@ -11,19 +10,24 @@ import { Position } from './position';
   providedIn: 'root'
 })
 export class Players {
-  getQuarterbacks(): Observable<PlayerCategory> {
-    return of({ position: Position.qb, players: quarterbacks });
+  private readonly quarterbacks_ = signal<PlayerCategory>({ position: Position.qb, players: quarterbacks });
+  private readonly recievers_ = signal<PlayerCategory>({ position: Position.wr, players: receivers });
+  private readonly tightEnds_ = signal<PlayerCategory>({ position: Position.te, players: tightEnds });
+  private readonly runningBacks_ = signal<PlayerCategory>({ position: Position.rb, players: runningBacks });
+
+  get quarterbacks(): Signal<PlayerCategory> {
+    return this.quarterbacks_.asReadonly();
   }
 
-  getRunningBacks(): Observable<PlayerCategory> {
-    return of({ position: Position.rb, players: runningBacks });
+  get runningBacks(): Signal<PlayerCategory> {
+    return this.runningBacks_.asReadonly();
   }
 
-  getReceivers(): Observable<PlayerCategory> {
-    return of({ position: Position.wr, players: receivers });
+  get recievers(): Signal<PlayerCategory> {
+    return this.recievers_.asReadonly();
   }
 
-  getTightEnds(): Observable<PlayerCategory> {
-    return of({ position: Position.te, players: tightEnds });
+  get tightEnds(): Signal<PlayerCategory> {
+    return this.tightEnds_.asReadonly();
   }
 }
