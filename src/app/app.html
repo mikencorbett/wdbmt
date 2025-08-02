@@ -15,6 +15,9 @@
     <div class="side-nav__player-list">
       <app-player-list listId="primary-list" [connectedListIds]="connectedListIds" [players]="playerPool()" (playerDrop)="handlePlayerDrop($event)"/>
     </div>
+    <div class="side-nav__action-bar">
+      <mat-slide-toggle [formControl]="draftModeControl">Draft Mode</mat-slide-toggle>
+    </div>
   </mat-drawer>
   <mat-drawer-content class="content">
     @if (activeCategoryControl.value) {
