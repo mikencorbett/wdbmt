@@ -11,7 +11,7 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    border-bottom: solid white;
+    border-bottom: solid var(--mat-sys-outline);
     margin-top: .5rem;
     .name-container {
       display: flex;
@@ -20,7 +20,7 @@
   }
 
   &__empty {
-    border: dotted 1px;
+    border: dotted 1px var(--mat-sys-outline);
     justify-content: center;
     align-items: center;
   }
