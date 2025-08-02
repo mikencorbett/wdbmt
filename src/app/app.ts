@@ -1,11 +1,10 @@
-import { Component, computed, DestroyRef, inject, OnInit, Signal, signal, WritableSignal } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, Signal } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { Players } from './api/players';
-import { filter, forkJoin } from 'rxjs';
 import { PlayerCategory } from './api/player-category';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { PlayerList } from './components/player-list/player-list';
 import { PlayerInfo } from './api/player-info';
 import { TierManager } from './components/tier-manager/tier-manager';
@@ -14,6 +13,7 @@ import { LocalStorage } from './api/local-storage';
 import { Position } from './api/position';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { DragDropService } from './api/drag-drop';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-root',
@@ -23,22 +23,27 @@ import { DragDropService } from './api/drag-drop';
     MatButtonToggleGroup,
     ReactiveFormsModule,
     PlayerList,
-    TierManager
+    TierManager,
+    MatSlideToggleModule
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App implements OnInit {
+export class App {
   tiers: Tier[] = [];
   connectedListIds: string[] = [];
   private readonly localStorageService = inject(LocalStorage);
   private readonly dragDropService = inject(DragDropService);
-  readonly playerCategories: WritableSignal<PlayerCategory[]> = signal([]);
-  readonly activeCategoryControl = new FormControl<PlayerCategory | null>(null);
-  private readonly destroyRef$ = inject(DestroyRef);
-  readonly activeCategorySignal: WritableSignal<PlayerCategory | null> = signal(this.activeCategoryControl.value);
+  private readonly players = inject(Players);
+  readonly playerCategories = computed(() => {
+    return [this.players.quarterbacks(), this.players.recievers(), this.players.runningBacks(), this.players.tightEnds()]
+  })
+  readonly activeCategoryControl = new FormControl<PlayerCategory>(this.playerCategories()[0], { nonNullable: true });
+  readonly draftModeControl = new FormControl(false, { nonNullable: true });
+  readonly activeCategory = toSignal(this.activeCategoryControl.valueChanges, { initialValue: this.playerCategories()[0] });
+
   readonly playerPool: Signal<PlayerInfo[]> = computed(() => {
-    const activeCategory = this.activeCategorySignal();
+    const activeCategory = this.activeCategory();
     if (!activeCategory) {
       return [];
     }
@@ -51,11 +56,8 @@ export class App implements OnInit {
     }
   });
 
-  private readonly players = inject(Players);
-
-  ngOnInit(): void {
+  constructor() {
     this.subscribeToActivePositionChanges();
-    this.initPlayerData();
   }
 
   handlePlayerDrop(event: CdkDragDrop<PlayerInfo[]>) {
@@ -64,40 +66,16 @@ export class App implements OnInit {
   }
 
   private saveTiers(): void {
-    const position = this.activeCategorySignal()?.position;
-    if (!position) {
-      return
-    }
+    const position = this.activeCategory().position;
     this.localStorageService.saveTier(position, this.tiers);
   }
 
   private subscribeToActivePositionChanges(): void {
-    this.activeCategoryControl
-      .valueChanges
-      .pipe(
-        filter(cat => cat !== null),
-        takeUntilDestroyed(this.destroyRef$)
-      )
-      .subscribe(cat => {
-        this.activeCategorySignal.set(cat);
-        this.loadTiers(cat?.position);
-      })
-  }
-
-  private initPlayerData(): void {
-    forkJoin([
-      this.players.getQuarterbacks(),
-      this.players.getReceivers(),
-      this.players.getRunningBacks(),
-      this.players.getTightEnds()
-    ]).subscribe(playerCategories => {
-      this.playerCategories.set(playerCategories);
-      this.activeCategoryControl.setValue(playerCategories[0]);
-    })
+    effect(_ => this.loadTiers(this.activeCategory().position))
   }
 
   private loadTiers(category: Position): void {
-    if (this.localStorageService.savedTiers() === null) {
+    if (!this.localStorageService.savedTiers()) {
       this.setDefaultTiers();
       return;
     }
@@ -116,7 +94,7 @@ export class App implements OnInit {
   private setDefaultTiers(): void {
     this.tiers = [];
     for (let i: number = 0; i < 7; i++) {
-      this.tiers.push({ players: [] })
+      this.tiers.push({players: []})
     }
   }
 }
