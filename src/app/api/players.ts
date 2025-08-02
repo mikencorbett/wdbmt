@@ -14,6 +14,7 @@ export class Players {
   private readonly recievers_ = signal<PlayerCategory>({ position: Position.wr, players: receivers });
   private readonly tightEnds_ = signal<PlayerCategory>({ position: Position.te, players: tightEnds });
   private readonly runningBacks_ = signal<PlayerCategory>({ position: Position.rb, players: runningBacks });
+  private readonly all_ = signal<PlayerCategory>({ position: Position.all, players: [...quarterbacks, ...runningBacks, ...receivers, ...tightEnds] });
 
   get quarterbacks(): Signal<PlayerCategory> {
     return this.quarterbacks_.asReadonly();
@@ -29,5 +30,9 @@ export class Players {
 
   get tightEnds(): Signal<PlayerCategory> {
     return this.tightEnds_.asReadonly();
+  }
+
+  get all(): Signal<PlayerCategory> {
+    return this.all_.asReadonly();
   }
 }

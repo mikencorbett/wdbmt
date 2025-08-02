@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, OnInit, Signal } from '@angular/core';
+import { Component, computed, effect, inject, Signal } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { Players } from './api/players';
@@ -36,7 +36,7 @@ export class App {
   private readonly dragDropService = inject(DragDropService);
   private readonly players = inject(Players);
   readonly playerCategories = computed(() => {
-    return [this.players.quarterbacks(), this.players.recievers(), this.players.runningBacks(), this.players.tightEnds()]
+    return [this.players.quarterbacks(), this.players.recievers(), this.players.runningBacks(), this.players.tightEnds(), this.players.all()]
   })
   readonly activeCategoryControl = new FormControl<PlayerCategory>(this.playerCategories()[0], { nonNullable: true });
   readonly draftModeControl = new FormControl(false, { nonNullable: true });
@@ -47,7 +47,8 @@ export class App {
     if (!activeCategory) {
       return [];
     }
-    const usedPlayers = this.localStorageService.savedTiers()?.filter(t => t.position === activeCategory.position)
+    const positionsToFilterOn = activeCategory.position === Position.all ? [Position.qb, Position.rb, Position.wr, Position.te] : [activeCategory.position];
+    const usedPlayers = this.localStorageService.savedTiers()?.filter(t => positionsToFilterOn.includes(t.position))
       .map(g => g.tiers.map(t => t.players).flat()).flat().map(p => p.name);
     if (!usedPlayers) {
       return activeCategory.players;
@@ -79,7 +80,8 @@ export class App {
       this.setDefaultTiers();
       return;
     }
-    if (this.localStorageService.savedTiers()?.some(v => v.position === category && v.tiers.length)) {
+    const positionsToFilterOn = category === Position.all ? [Position.qb, Position.rb, Position.wr, Position.te] : [category];
+    if (this.localStorageService.savedTiers()?.some(v => positionsToFilterOn.includes(v.position) && v.tiers.length)) {
       this.tiers = this.localStorageService.savedTiers()?.filter(tg => tg.position === category).map(g => g.tiers).flat() ?? [];
     } else {
       this.setDefaultTiers();
