@@ -1,79 +1,205 @@
 import { PlayerInfo } from '../player-info';
+import { Position } from '../position';
 
 export const receivers: PlayerInfo[] = [
-  { "name": "Ja'Marr Chase", "team": "CIN", "byeWeek": 10, "portrait_url": "https://example.com/portraits/jamarr_chase.jpg" },
-  { "name": "Justin Jefferson", "team": "MIN", "byeWeek": 6, "portrait_url": "https://example.com/portraits/justin_jefferson.jpg" },
-  { "name": "CeeDee Lamb", "team": "DAL", "byeWeek": 10, "portrait_url": "https://example.com/portraits/ceedee_lamb.jpg" },
-  { "name": "Puka Nacua", "team": "LAR", "byeWeek": 8, "portrait_url": "https://example.com/portraits/puka_nacua.jpg" },
-  { "name": "Brian Thomas Jr.", "team": "JAX", "byeWeek": 8, "portrait_url": "https://example.com/portraits/brian_thomas_jr.jpg" },
-  { "name": "Malik Nabers", "team": "NYG", "byeWeek": 14, "portrait_url": "https://example.com/portraits/malik_nabers.jpg" },
-  { "name": "Nico Collins", "team": "HOU", "byeWeek": 7, "portrait_url": "https://example.com/portraits/nico_collins.jpg" },
-  { "name": "A.J. Brown", "team": "PHI", "byeWeek": 9, "portrait_url": "https://example.com/portraits/aj_brown.jpg" },
-  { "name": "Amon-Ra St. Brown", "team": "DET", "byeWeek": 8, "portrait_url": "https://example.com/portraits/amonra_st_brown.jpg" },
-  { "name": "Ladd McConkey", "team": "LAC", "byeWeek": 12, "portrait_url": "https://example.com/portraits/ladd_mcconkey.jpg" },
-  { "name": "Tee Higgins", "team": "CIN", "byeWeek": 10, "portrait_url": "https://example.com/portraits/tee_higgins.jpg" },
-  { "name": "Drake London", "team": "ATL", "byeWeek": 5, "portrait_url": "https://example.com/portraits/drake_london.jpg" },
-  { "name": "Davante Adams", "team": "LAR", "byeWeek": 8, "portrait_url": "https://example.com/portraits/davante_adams.jpg" },
-  { "name": "Terry McLaurin", "team": "WAS", "byeWeek": 12, "portrait_url": "https://example.com/portraits/terry_mclaurin.jpg" },
-  { "name": "Mike Evans", "team": "TB", "byeWeek": 9, "portrait_url": "https://example.com/portraits/mike_evans.jpg" },
-  { "name": "Marvin Harrison Jr.", "team": "ARI", "byeWeek": 8, "portrait_url": "https://example.com/portraits/marvin_harrison_jr.jpg" },
-  { "name": "Tyreek Hill", "team": "MIA", "byeWeek": 12, "portrait_url": "https://example.com/portraits/tyreek_hill.jpg" },
-  { "name": "DK Metcalf", "team": "PIT", "byeWeek": 5, "portrait_url": "https://example.com/portraits/dk_metcalf.jpg" },
-  { "name": "Rashee Rice", "team": "KC", "byeWeek": 10, "portrait_url": "https://example.com/portraits/rashee_rice.jpg" },
-  { "name": "DeVonta Smith", "team": "PHI", "byeWeek": 9, "portrait_url": "https://example.com/portraits/devonta_smith.jpg" },
-  { "name": "Jaxon Smith-Njigba", "team": "SEA", "byeWeek": 8, "portrait_url": "https://example.com/portraits/jaxon_smith_njigba.jpg" },
-  { "name": "Garrett Wilson", "team": "NYJ", "byeWeek": 9, "portrait_url": "https://example.com/portraits/garrett_wilson.jpg" },
-  { "name": "Xavier Worthy", "team": "KC", "byeWeek": 10, "portrait_url": "https://example.com/portraits/xavier_worthy.jpg" },
-  { "name": "Courtland Sutton", "team": "DEN", "byeWeek": 12, "portrait_url": "https://example.com/portraits/courtland_sutton.jpg" },
-  { "name": "DJ Moore", "team": "CHI", "byeWeek": 5, "portrait_url": "https://example.com/portraits/dj_moore.jpg" },
-  { "name": "Jameson Williams", "team": "DET", "byeWeek": 8, "portrait_url": "https://example.com/portraits/jameson_williams.jpg" },
-  { "name": "Zay Flowers", "team": "BAL", "byeWeek": 7, "portrait_url": "https://example.com/portraits/zay_flowers.jpg" },
-  { "name": "Calvin Ridley", "team": "TEN", "byeWeek": 10, "portrait_url": "https://example.com/portraits/calvin_ridley.jpg" },
-  { "name": "Jordan Addison", "team": "MIN", "byeWeek": 6, "portrait_url": "https://example.com/portraits/jordan_addison.jpg" },
-  { "name": "Jerry Jeudy", "team": "CLE", "byeWeek": 9, "portrait_url": "https://example.com/portraits/jerry_jeudy.jpg" },
-  { "name": "Chris Godwin", "team": "TB", "byeWeek": 9, "portrait_url": "https://example.com/portraits/chris_godwin.jpg" },
-  { "name": "George Pickens", "team": "DAL", "byeWeek": 10, "portrait_url": "https://example.com/portraits/george_pickens.jpg" },
-  { "name": "Jauan Jennings", "team": "SF", "byeWeek": 14, "portrait_url": "https://example.com/portraits/jauan_jennings.jpg" },
-  { "name": "Deebo Samuel Sr.", "team": "WAS", "byeWeek": 12, "portrait_url": "https://example.com/portraits/deebo_samuel.jpg" },
-  { "name": "Travis Hunter", "team": "JAX", "byeWeek": 8, "portrait_url": "https://example.com/portraits/travis_hunter.jpg" },
-  { "name": "Jaylen Waddle", "team": "MIA", "byeWeek": 12, "portrait_url": "https://example.com/portraits/jaylen_waddle.jpg" },
-  { "name": "Jakobi Meyers", "team": "LV", "byeWeek": 8, "portrait_url": "https://example.com/portraits/jakobi_meyers.jpg" },
-  { "name": "Jayden Reed", "team": "GB", "byeWeek": 5, "portrait_url": "https://example.com/portraits/jayden_reed.jpg" },
-  { "name": "Rome Odunze", "team": "CHI", "byeWeek": 5, "portrait_url": "https://example.com/portraits/rome_odunze.jpg" },
-  { "name": "Tetairoa McMillan", "team": "CAR", "byeWeek": 14, "portrait_url": "https://example.com/portraits/tetairoa_mcmillan.jpg" },
-  { "name": "Chris Olave", "team": "NO", "byeWeek": 11, "portrait_url": "https://example.com/portraits/chris_olave.jpg" },
-  { "name": "Darnell Mooney", "team": "ATL", "byeWeek": 5, "portrait_url": "https://example.com/portraits/darnell_mooney.jpg" },
-  { "name": "Rashid Shaheed", "team": "NO", "byeWeek": 11, "portrait_url": "https://example.com/portraits/rashid_shaheed.jpg" },
-  { "name": "Keon Coleman", "team": "BUF", "byeWeek": 7, "portrait_url": "https://example.com/portraits/keon_coleman.jpg" },
-  { "name": "Matthew Golden", "team": "GB", "byeWeek": 5, "portrait_url": "https://example.com/portraits/matthew_golden.jpg" },
-  { "name": "Khalil Shakir", "team": "BUF", "byeWeek": 7, "portrait_url": "https://example.com/portraits/khalil_shakir.jpg" },
-  { "name": "Ricky Pearsall", "team": "SF", "byeWeek": 14, "portrait_url": "https://example.com/portraits/ricky_pearsall.jpg" },
-  { "name": "Cooper Kupp", "team": "SEA", "byeWeek": 8, "portrait_url": "https://example.com/portraits/cooper_kupp.jpg" },
-  { "name": "Rashod Bateman", "team": "BAL", "byeWeek": 7, "portrait_url": "https://example.com/portraits/rashod_bateman.jpg" },
-  { "name": "Michael Pittman Jr.", "team": "IND", "byeWeek": 11, "portrait_url": "https://example.com/portraits/michael_pittman.jpg" },
-  { "name": "Marvin Mims Jr.", "team": "DEN", "byeWeek": 12, "portrait_url": "https://example.com/portraits/marvin_mims.jpg" },
-  { "name": "Stefon Diggs", "team": "NE", "byeWeek": 14, "portrait_url": "https://example.com/portraits/stefon_diggs.jpg" },
-  { "name": "Josh Downs", "team": "IND", "byeWeek": 11, "portrait_url": "https://example.com/portraits/josh_downs.jpg" },
-  { "name": "Brandon Aiyuk", "team": "SF", "byeWeek": 14, "portrait_url": "https://example.com/portraits/brandon_aiyuk.jpg" },
-  { "name": "Adam Thielen", "team": "CAR", "byeWeek": 14, "portrait_url": "https://example.com/portraits/adam_thielen.jpg" },
-  { "name": "Christian Kirk", "team": "HOU", "byeWeek": 6, "portrait_url": "https://example.com/portraits/christian_kirk.jpg" },
-  { "name": "Cedric Tillman", "team": "CLE", "byeWeek": 9, "portrait_url": "https://example.com/portraits/cedric_tillman.jpg" },
-  { "name": "Tre Harris", "team": "LAC", "byeWeek": 12, "portrait_url": "https://example.com/portraits/tre_harris.jpg" },
-  { "name": "Jack Bech", "team": "LV", "byeWeek": 8, "portrait_url": "https://example.com/portraits/jack_bech.jpg" },
-  { "name": "Quentin Johnston", "team": "LAC", "byeWeek": 12, "portrait_url": "https://example.com/portraits/quentin_johnston.jpg" },
-  { "name": "Romeo Doubs", "team": "GB", "byeWeek": 5, "portrait_url": "https://example.com/portraits/romeo_doubs.jpg" },
-  { "name": "Marquise Brown", "team": "KC", "byeWeek": 10, "portrait_url": "https://example.com/portraits/marquise_brown.jpg" },
-  { "name": "Michael Wilson", "team": "ARI", "byeWeek": 8, "portrait_url": "https://example.com/portraits/michael_wilson.jpg" },
-  { "name": "Alec Pierce", "team": "IND", "byeWeek": 11, "portrait_url": "https://example.com/portraits/alec_pierce.jpg" },
-  { "name": "Wan'Dale Robinson", "team": "NYG", "byeWeek": 14, "portrait_url": "https://example.com/portraits/wandale_robinson.jpg" },
-  { "name": "Emeka Egbuka", "team": "TB", "byeWeek": 9, "portrait_url": "https://example.com/portraits/emeka_egbuka.jpg" },
-  { "name": "Calvin Austin III", "team": "PIT", "byeWeek": 5, "portrait_url": "https://example.com/portraits/calvin_austin.jpg" },
-  { "name": "Kyle Williams", "team": "NE", "byeWeek": 14, "portrait_url": "https://example.com/portraits/kyle_williams.jpg" },
-  { "name": "Jayden Higgins", "team": "HOU", "byeWeek": 6, "portrait_url": "https://example.com/portraits/jayden_higgins.jpg" },
-  { "name": "Xavier Legette", "team": "CAR", "byeWeek": 14, "portrait_url": "https://example.com/portraits/xavier_legette.jpg" },
-  { "name": "Luther Burden III", "team": "CHI", "byeWeek": 5, "portrait_url": "https://example.com/portraits/luther_burden.jpg" },
-  { "name": "Joshua Palmer", "team": "BUF", "byeWeek": 7, "portrait_url": "https://example.com/portraits/joshua_palmer.jpg" },
-  { "name": "DeAndre Hopkins", "team": "BAL", "byeWeek": 7, "portrait_url": "https://example.com/portraits/deandre_hopkins.jpg" },
-  { "name": "Tyler Lockett", "team": "TEN", "byeWeek": 10, "portrait_url": "https://example.com/portraits/tyler_lockett.jpg" },
-  { "name": "DeMario Douglas", "team": "NE", "byeWeek": 14, "portrait_url": "https://example.com/portraits/demario_douglas.jpg" }
+  { "name": "Ja'Marr Chase", "team": "CIN", "byeWeek": 10, "position": Position.wr },
+  { "name": "Justin Jefferson", "team": "MIN", "byeWeek": 6, "position": Position.wr },
+  { "name": "CeeDee Lamb", "team": "DAL", "byeWeek": 10, "position": Position.wr },
+  { "name": "Puka Nacua", "team": "LAR", "byeWeek": 8, "position": Position.wr },
+  { "name": "Brian Thomas Jr.", "team": "JAX", "byeWeek": 8, "position": Position.wr },
+  { "name": "Malik Nabers", "team": "NYG", "byeWeek": 14, "position": Position.wr },
+  { "name": "Nico Collins", "team": "HOU", "byeWeek": 7, "position": Position.wr },
+  { "name": "A.J. Brown", "team": "PHI", "byeWeek": 9, "position": Position.wr },
+  { "name": "Amon-Ra St. Brown", "team": "DET", "byeWeek": 8, "position": Position.wr },
+  { "name": "Ladd McConkey", "team": "LAC", "byeWeek": 12, "position": Position.wr },
+  { "name": "Tee Higgins", "team": "CIN", "byeWeek": 10, "position": Position.wr },
+  { "name": "Drake London", "team": "ATL", "byeWeek": 5, "position": Position.wr },
+  { "name": "Davante Adams", "team": "LAR", "byeWeek": 8, "position": Position.wr },
+  { "name": "Terry McLaurin", "team": "WAS", "byeWeek": 12, "position": Position.wr },
+  { "name": "Mike Evans", "team": "TB", "byeWeek": 9, "position": Position.wr },
+  { "name": "Marvin Harrison Jr.", "team": "ARI", "byeWeek": 8, "position": Position.wr },
+  { "name": "Tyreek Hill", "team": "MIA", "byeWeek": 12, "position": Position.wr },
+  { "name": "DK Metcalf", "team": "PIT", "byeWeek": 5, "position": Position.wr },
+  { "name": "Rashee Rice", "team": "KC", "byeWeek": 10, "position": Position.wr },
+  { "name": "DeVonta Smith", "team": "PHI", "byeWeek": 9, "position": Position.wr },
+  { "name": "Jaxon Smith-Njigba", "team": "SEA", "byeWeek": 8, "position": Position.wr },
+  { "name": "Garrett Wilson", "team": "NYJ", "byeWeek": 9, "position": Position.wr },
+  { "name": "Xavier Worthy", "team": "KC", "byeWeek": 10, "position": Position.wr },
+  { "name": "Courtland Sutton", "team": "DEN", "byeWeek": 12, "position": Position.wr },
+  { "name": "DJ Moore", "team": "CHI", "byeWeek": 5, "position": Position.wr },
+  { "name": "Jameson Williams", "team": "DET", "byeWeek": 8, "position": Position.wr },
+  { "name": "Zay Flowers", "team": "BAL", "byeWeek": 7, "position": Position.wr },
+  { "name": "Calvin Ridley", "team": "TEN", "byeWeek": 10, "position": Position.wr },
+  { "name": "Jordan Addison", "team": "MIN", "byeWeek": 6, "position": Position.wr },
+  { "name": "Jerry Jeudy", "team": "CLE", "byeWeek": 9, "position": Position.wr },
+  { "name": "Chris Godwin", "team": "TB", "byeWeek": 9, "position": Position.wr },
+  { "name": "George Pickens", "team": "DAL", "byeWeek": 10, "position": Position.wr },
+  { "name": "Jauan Jennings", "team": "SF", "byeWeek": 14, "position": Position.wr },
+  { "name": "Deebo Samuel Sr.", "team": "WAS", "byeWeek": 12, "position": Position.wr },
+  { "name": "Travis Hunter", "team": "JAX", "byeWeek": 8, "position": Position.wr },
+  { "name": "Jaylen Waddle", "team": "MIA", "byeWeek": 12, "position": Position.wr },
+  { "name": "Jakobi Meyers", "team": "LV", "byeWeek": 8, "position": Position.wr },
+  { "name": "Jayden Reed", "team": "GB", "byeWeek": 5, "position": Position.wr },
+  { "name": "Rome Odunze", "team": "CHI", "byeWeek": 5, "position": Position.wr },
+  { "name": "Tetairoa McMillan", "team": "CAR", "byeWeek": 14, "position": Position.wr },
+  { "name": "Chris Olave", "team": "NO", "byeWeek": 11, "position": Position.wr },
+  { "name": "Darnell Mooney", "team": "ATL", "byeWeek": 5, "position": Position.wr },
+  { "name": "Rashid Shaheed", "team": "NO", "byeWeek": 11, "position": Position.wr },
+  { "name": "Keon Coleman", "team": "BUF", "byeWeek": 7, "position": Position.wr },
+  { "name": "Matthew Golden", "team": "GB", "byeWeek": 5, "position": Position.wr },
+  { "name": "Khalil Shakir", "team": "BUF", "byeWeek": 7, "position": Position.wr },
+  { "name": "Ricky Pearsall", "team": "SF", "byeWeek": 14, "position": Position.wr },
+  { "name": "Cooper Kupp", "team": "SEA", "byeWeek": 8, "position": Position.wr },
+  { "name": "Rashod Bateman", "team": "BAL", "byeWeek": 7, "position": Position.wr },
+  {
+    "name": "Michael Pittman Jr.",
+    "team": "IND",
+    "byeWeek": 11,
+    "position": Position.wr
+  },
+  {
+    "name": "Marvin Mims Jr.",
+    "team": "DEN",
+    "byeWeek": 12,
+    "position": Position.wr
+  },
+  {
+    "name": "Stefon Diggs",
+    "team": "NE",
+    "byeWeek": 14,
+    "position": Position.wr
+  },
+  {
+    "name": "Josh Downs",
+    "team": "IND",
+    "byeWeek": 11,
+    "position": Position.wr
+  },
+  {
+    "name": "Brandon Aiyuk",
+    "team": "SF",
+    "byeWeek": 14,
+    "position": Position.wr
+  },
+  {
+    "name": "Adam Thielen",
+    "team": "CAR",
+    "byeWeek": 14,
+    "position": Position.wr
+  },
+  {
+    "name": "Christian Kirk",
+    "team": "HOU",
+    "byeWeek": 6,
+    "position": Position.wr
+  },
+  {
+    "name": "Cedric Tillman",
+    "team": "CLE",
+    "byeWeek": 9,
+    "position": Position.wr
+  },
+  {
+    "name": "Tre Harris",
+    "team": "LAC",
+    "byeWeek": 12,
+    "position": Position.wr
+  },
+  { "name": "Jack Bech", "team": "LV", "byeWeek": 8, "position": Position.wr },
+  {
+    "name": "Quentin Johnston",
+    "team": "LAC",
+    "byeWeek": 12,
+    "position": Position.wr
+  },
+  {
+    "name": "Romeo Doubs",
+    "team": "GB",
+    "byeWeek": 5,
+    "position": Position.wr
+  },
+  {
+    "name": "Marquise Brown",
+    "team": "KC",
+    "byeWeek": 10,
+    "position": Position.wr
+  },
+  {
+    "name": "Michael Wilson",
+    "team": "ARI",
+    "byeWeek": 8,
+    "position": Position.wr
+  },
+  {
+    "name": "Alec Pierce",
+    "team": "IND",
+    "byeWeek": 11,
+    "position": Position.wr
+  },
+  {
+    "name": "Wan'Dale Robinson",
+    "team": "NYG",
+    "byeWeek": 14,
+    "position": Position.wr
+  },
+  {
+    "name": "Emeka Egbuka",
+    "team": "TB",
+    "byeWeek": 9,
+    "position": Position.wr
+  },
+  {
+    "name": "Calvin Austin III",
+    "team": "PIT",
+    "byeWeek": 5,
+    "position": Position.wr
+  },
+  {
+    "name": "Kyle Williams",
+    "team": "NE",
+    "byeWeek": 14,
+    "position": Position.wr
+  },
+  {
+    "name": "Jayden Higgins",
+    "team": "HOU",
+    "byeWeek": 6,
+    "position": Position.wr
+  },
+  {
+    "name": "Xavier Legette",
+    "team": "CAR",
+    "byeWeek": 14,
+    "position": Position.wr
+  },
+  {
+    "name": "Luther Burden III",
+    "team": "CHI",
+    "byeWeek": 5,
+    "position": Position.wr
+  },
+  {
+    "name": "Joshua Palmer",
+    "team": "BUF",
+    "byeWeek": 7,
+    "position": Position.wr
+  },
+  {
+    "name": "DeAndre Hopkins",
+    "team": "BAL",
+    "byeWeek": 7,
+    "position": Position.wr
+  },
+  {
+    "name": "Tyler Lockett",
+    "team": "TEN",
+    "byeWeek": 10,
+    "position": Position.wr
+  },
+  {
+    "name": "DeMario Douglas",
+    "team": "NE",
+    "byeWeek": 14,
+    "position": Position.wr
+  }
 ]

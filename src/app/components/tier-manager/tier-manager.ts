@@ -46,10 +46,24 @@ export class TierManager {
 
   handlePlayerDrop(event: CdkDragDrop<PlayerInfo[]>) {
     this.dragDropService.handleDragDrop(event);
-    this.saveTiers();
+    const position: Position = event.item.data.position;
+    this.saveTiers(position);
   }
 
-  private saveTiers(): void {
-    this.localStorageService.saveTier(this.activeCategory, this.tiers);
+  private saveTiers(position: Position | null = null): void {
+    const tiersToSave = position
+      ? this.tiers
+        .map(tier => ({
+          players: tier.players.filter(p => p.position === position)
+        }))
+        .filter(tier => tier.players.length > 0 || this.isEmptyTier(tier))
+      : this.tiers;
+    this.localStorageService.saveTier(position || this.activeCategory, tiersToSave);
   }
+
+  private isEmptyTier(tier: Tier): boolean {
+    return tier.players.length === 0;
+  }
+
+
 }

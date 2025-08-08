@@ -76,18 +76,37 @@ export class App {
   }
 
   private loadTiers(category: Position): void {
-    if (!this.localStorageService.savedTiers()) {
+    const saved = this.localStorageService.savedTiers();
+    if (!saved) {
       this.setDefaultTiers();
       return;
     }
-    const positionsToFilterOn = category === Position.all ? [Position.qb, Position.rb, Position.wr, Position.te] : [category];
-    if (this.localStorageService.savedTiers()?.some(v => positionsToFilterOn.includes(v.position) && v.tiers.length)) {
-      this.tiers = this.localStorageService.savedTiers()?.filter(tg => tg.position === category).map(g => g.tiers).flat() ?? [];
+    const positionsToFilterOn =
+      category === Position.all
+        ? [Position.qb, Position.rb, Position.wr, Position.te]
+        : [category];
+
+    const filtered = saved.filter(tg => positionsToFilterOn.includes(tg.position) && tg.tiers.length);
+
+    if (filtered.length) {
+      const maxTiers = Math.max(...filtered.map(p => p.tiers.length));
+      const combined: Tier[][] = Array.from({ length: maxTiers }, () => []);
+      filtered.forEach(({ tiers }) => {
+        tiers.forEach((tier, index) => {
+          combined[index].push({ players: [...tier.players] });
+        });
+      });
+      this.tiers = combined.map(group => ({
+        players: group.flatMap(t => t.players)
+      }));
+
     } else {
       this.setDefaultTiers();
     }
+
     this.setConnectedListIds();
   }
+
 
   private setConnectedListIds(): void {
     this.connectedListIds = ['primary-list', ...this.tiers.map((_, index) => `tier-${index}`)]
