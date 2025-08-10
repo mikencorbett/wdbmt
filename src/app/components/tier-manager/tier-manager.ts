@@ -1,17 +1,11 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Tier } from '../tier';
 import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
-import {
-  CdkDrag,
-  CdkDragDrop,
-  CdkDragHandle, CdkDropList, CdkDropListGroup,
-  moveItemInArray, transferArrayItem
-} from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { PlayerList } from '../player-list/player-list';
 import { PlayerInfo } from '../../api/player-info';
 import { MatIcon } from '@angular/material/icon';
 import { LocalStorage } from '../../api/local-storage';
-import { PlayerCategory } from '../../api/player-category';
 import { Position } from '../../api/position';
 import { DragDropService } from '../../api/drag-drop';
 
@@ -41,7 +35,14 @@ export class TierManager {
 
   drop(event: CdkDragDrop<Tier[]>) {
     moveItemInArray(this.tiers, event.previousIndex, event.currentIndex);
-    this.saveTiers();
+    if (this.activeCategory === Position.all) {
+      Object.values(Position).forEach((item) => {
+        if (item === Position.all) return;
+        this.saveTiers(item);
+      })
+    } else {
+      this.saveTiers();
+    }
   }
 
   handlePlayerDrop(event: CdkDragDrop<PlayerInfo[]>) {

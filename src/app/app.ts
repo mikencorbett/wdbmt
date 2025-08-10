@@ -99,7 +99,6 @@ export class App {
       this.tiers = combined.map(group => ({
         players: group.flatMap(t => t.players)
       }));
-
     } else {
       this.setDefaultTiers();
     }
