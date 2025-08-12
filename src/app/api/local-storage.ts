@@ -12,6 +12,7 @@ export class LocalStorage {
 
   saveTier(position: Position, tiers: Tier[]): void {
     localStorage.setItem(`${this.WDBMT_LOCAL_STORAGE_KEY}-${position}`, JSON.stringify(tiers));
+    this.setSavedTiers();
   }
 
   setSavedTiers(): void {

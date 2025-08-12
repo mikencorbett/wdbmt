@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, OnInit, Signal } from '@angular/core';
+import { Component, computed, effect, inject, Signal } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { Players } from './api/players';
@@ -36,7 +36,7 @@ export class App {
   private readonly dragDropService = inject(DragDropService);
   private readonly players = inject(Players);
   readonly playerCategories = computed(() => {
-    return [this.players.quarterbacks(), this.players.recievers(), this.players.runningBacks(), this.players.tightEnds()]
+    return [this.players.quarterbacks(), this.players.recievers(), this.players.runningBacks(), this.players.tightEnds(), this.players.all()]
   })
   readonly activeCategoryControl = new FormControl<PlayerCategory>(this.playerCategories()[0], { nonNullable: true });
   readonly draftModeControl = new FormControl(false, { nonNullable: true });
@@ -47,7 +47,8 @@ export class App {
     if (!activeCategory) {
       return [];
     }
-    const usedPlayers = this.localStorageService.savedTiers()?.filter(t => t.position === activeCategory.position)
+    const positionsToFilterOn = activeCategory.position === Position.all ? [Position.qb, Position.rb, Position.wr, Position.te] : [activeCategory.position];
+    const usedPlayers = this.localStorageService.savedTiers()?.filter(t => positionsToFilterOn.includes(t.position))
       .map(g => g.tiers.map(t => t.players).flat()).flat().map(p => p.name);
     if (!usedPlayers) {
       return activeCategory.players;
@@ -75,17 +76,36 @@ export class App {
   }
 
   private loadTiers(category: Position): void {
-    if (!this.localStorageService.savedTiers()) {
+    const saved = this.localStorageService.savedTiers();
+    if (!saved) {
       this.setDefaultTiers();
       return;
     }
-    if (this.localStorageService.savedTiers()?.some(v => v.position === category && v.tiers.length)) {
-      this.tiers = this.localStorageService.savedTiers()?.filter(tg => tg.position === category).map(g => g.tiers).flat() ?? [];
+    const positionsToFilterOn =
+      category === Position.all
+        ? [Position.qb, Position.rb, Position.wr, Position.te]
+        : [category];
+
+    const filtered = saved.filter(tg => positionsToFilterOn.includes(tg.position) && tg.tiers.length);
+
+    if (filtered.length) {
+      const maxTiers = Math.max(...filtered.map(p => p.tiers.length));
+      const combined: Tier[][] = Array.from({ length: maxTiers }, () => []);
+      filtered.forEach(({ tiers }) => {
+        tiers.forEach((tier, index) => {
+          combined[index].push({ players: [...tier.players] });
+        });
+      });
+      this.tiers = combined.map(group => ({
+        players: group.flatMap(t => t.players)
+      }));
     } else {
       this.setDefaultTiers();
     }
+
     this.setConnectedListIds();
   }
+
 
   private setConnectedListIds(): void {
     this.connectedListIds = ['primary-list', ...this.tiers.map((_, index) => `tier-${index}`)]
