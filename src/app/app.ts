@@ -66,6 +66,15 @@ export class App {
     this.saveTiers();
   }
 
+  addTier(): void {
+    this.tiers.push({ players: [] })
+  }
+
+  deleteTier(index:number): void {
+    this.tiers.splice(index, 1);
+    this.saveTiers();
+  }
+
   private saveTiers(): void {
     const position = this.activeCategory().position;
     this.localStorageService.saveTier(position, this.tiers);
@@ -102,7 +111,6 @@ export class App {
     } else {
       this.setDefaultTiers();
     }
-
     this.setConnectedListIds();
   }
 

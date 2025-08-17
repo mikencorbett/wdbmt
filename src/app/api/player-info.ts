@@ -5,4 +5,5 @@ export interface PlayerInfo {
   team: string;
   byeWeek: number;
   position: Position;
+  wasDrafted: boolean;
 }

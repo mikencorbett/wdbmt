@@ -1,7 +1,8 @@
 .player-list {
   width: 100%;
   height: 100%;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
 
@@ -12,10 +13,18 @@
     align-items: center;
     width: 100%;
     border-bottom: solid var(--mat-sys-outline);
-    margin-top: .5rem;
+    margin-top: 1rem;
     .name-container {
       display: flex;
       flex-direction: column;
+
+      &--subtitle {
+        font-size: .8rem;
+      }
+    }
+    &--drafted {
+      text-decoration: line-through;
+      opacity: 25%;
     }
   }
 
