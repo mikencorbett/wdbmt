@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { Tier } from '../tier';
 import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -8,6 +8,8 @@ import { MatIcon } from '@angular/material/icon';
 import { LocalStorage } from '../../api/local-storage';
 import { Position } from '../../api/position';
 import { DragDropService } from '../../api/drag-drop';
+import { MatFabButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-tier-manager',
@@ -20,7 +22,9 @@ import { DragDropService } from '../../api/drag-drop';
     CdkDragHandle,
     CdkDrag,
     CdkDropList,
-    MatIcon
+    MatIcon,
+    MatFabButton,
+    MatTooltip
   ],
   templateUrl: './tier-manager.html',
   styleUrl: './tier-manager.scss'
@@ -29,11 +33,16 @@ export class TierManager {
   @Input({ required: true }) tiers: Tier[] = [];
   @Input({ required: true }) connectedListIds: string[] = [];
   @Input({ required: true }) activeCategory: Position = Position.qb;
-
+  @Input({ required: true }) isDraftModeEnabled = false;
+  @Output() add = new EventEmitter<void>();
+  @Output() delete = new EventEmitter<number>();
   private readonly localStorageService = inject(LocalStorage);
   private readonly dragDropService = inject(DragDropService);
 
   drop(event: CdkDragDrop<Tier[]>) {
+    if (this.isDraftModeEnabled) {
+      return;
+    }
     moveItemInArray(this.tiers, event.previousIndex, event.currentIndex);
     if (this.activeCategory === Position.all) {
       Object.values(Position).forEach((item) => {
@@ -46,12 +55,15 @@ export class TierManager {
   }
 
   handlePlayerDrop(event: CdkDragDrop<PlayerInfo[]>) {
+    if (this.isDraftModeEnabled) {
+      return;
+    }
     this.dragDropService.handleDragDrop(event);
     const position: Position = event.item.data.position;
     this.saveTiers(position);
   }
 
-  private saveTiers(position: Position | null = null): void {
+  saveTiers(position: Position | null = null): void {
     const tiersToSave = position
       ? this.tiers
         .map(tier => ({
@@ -62,9 +74,16 @@ export class TierManager {
     this.localStorageService.saveTier(position || this.activeCategory, tiersToSave);
   }
 
-  private isEmptyTier(tier: Tier): boolean {
-    return tier.players.length === 0;
+  isEmptyTier(tier: Tier): boolean {
+    return !tier.players.length;
   }
 
 
+  addTier(): void {
+    this.add.emit();
+  }
+
+  deleteTier(index: number): void {
+    this.delete.emit(index);
+  }
 }

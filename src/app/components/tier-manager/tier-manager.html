@@ -4,20 +4,31 @@
       <mat-card
         class="tier-manager-container__item"
         cdkDrag
+        [cdkDragDisabled]="isDraftModeEnabled"
         [cdkDragData]="tier">
         <mat-card-header class="tier-manager-container__item--header">
           <mat-card-title><h3 class="tier-manager-container__item--header--label">Tier {{ $index + 1 }}</h3></mat-card-title>
-          <mat-icon class="tier-manager-container__item--header--icon" cdkDragHandle>drag_indicator</mat-icon>
+          <div>
+            <mat-icon class="tier-manager-container__item--header--icon" cdkDragHandle>drag_indicator</mat-icon>
+            @if (isEmptyTier(tier)) {
+              <mat-icon (click)="deleteTier($index)">delete</mat-icon>
+            }
+          </div>
         </mat-card-header>
         <mat-card-content class="tier-manager-container__item--content">
           <app-player-list
             [listId]="'tier-' + $index"
+            [isDraftModeEnabled]="isDraftModeEnabled"
             [players]="tier.players"
             [connectedListIds]="connectedListIds"
-            (playerDrop)="handlePlayerDrop($event)"/>
+            (playerDrop)="handlePlayerDrop($event)"
+            (playerDrafted)="saveTiers($event.position)"/>
         </mat-card-content>
       </mat-card>
     }
+    <button mat-fab color="primary" class="fab-button" (click)="addTier()" matTooltip='Add tier'>
+      <mat-icon>add</mat-icon>
+    </button>
   </div>
 }
 

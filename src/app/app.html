@@ -21,7 +21,13 @@
   </mat-drawer>
   <mat-drawer-content class="content">
     @if (activeCategoryControl.value) {
-      <app-tier-manager [activeCategory]="activeCategoryControl.value.position" [connectedListIds]="connectedListIds" [tiers]="tiers"/>
+      <app-tier-manager
+        [isDraftModeEnabled]="draftModeControl.value"
+        [activeCategory]="activeCategoryControl.value.position"
+        [connectedListIds]="connectedListIds"
+        [tiers]="tiers"
+        (add)="addTier()"
+        (delete)="deleteTier($event)"/>
     }
   </mat-drawer-content>
 </mat-drawer-container>

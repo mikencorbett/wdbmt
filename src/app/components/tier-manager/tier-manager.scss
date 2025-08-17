@@ -3,13 +3,15 @@
   display: flex;
   flex-flow: row wrap;
   gap: .5rem;
-
+  position: relative;
+  height: 100vh;
   &__item {
     display: flex;
     flex-direction: column;
     flex: 0 0 calc(25% - 0.5rem); // subtract gaps
     border-radius: 1rem;
     min-height: 20rem;
+    max-height: 50%;
 
     &--header {
       display: flex;
@@ -29,4 +31,13 @@
       height: 100%;
     }
   }
+
+  .fab-button {
+    position: fixed;
+    bottom: 2rem;
+    right: 3rem;
+    z-index: 9999;
+    border-radius: 5rem;
+  }
+
 }

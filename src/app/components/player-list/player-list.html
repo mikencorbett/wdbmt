@@ -7,12 +7,14 @@
   [ngClass]="{ 'player-list__empty': !players.length }"
   (cdkDropListDropped)="drop($event)">
   @for (player of players; track player.name) {
-    <div class="player-list__item" cdkDrag [cdkDragData]="player">
+    <div class="player-list__item" cdkDrag [cdkDragData]="player" [ngClass]="{'player-list__item--drafted': player.wasDrafted && isDraftModeEnabled}">
       <div class="name-container">
-        <span>{{ player.name }}</span>
-        <span>{{ player.team }}</span>
+        <strong>{{ player.name }}</strong>
+        <span class="name-container--subtitle">{{ player.team }} | BYE {{ player.byeWeek }}</span>
       </div>
-      <span>BYE {{ player.byeWeek }}</span>
+      @if (isDraftModeEnabled) {
+        <mat-checkbox [checked]="player.wasDrafted" (click)="markPlayerAsDrafted(player)"></mat-checkbox>
+      }
     </div>
   }
   @if (!players.length) {
