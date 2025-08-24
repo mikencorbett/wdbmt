@@ -28,7 +28,7 @@ export const runningBacks: PlayerInfo[] = [
   { "name": "Tony Pollard", "team": "TEN", "byeWeek": 10, "position": Position.rb, "wasDrafted": false },
   { "name": "Kaleb Johnson", "team": "PIT", "byeWeek": 5, "position": Position.rb, "wasDrafted": false },
   { "name": "Quinshon Judkins", "team": "CLE", "byeWeek": 9, "position": Position.rb, "wasDrafted": false },
-  { "name": "Brian Robinson Jr.", "team": "WAS", "byeWeek": 12, "position": Position.rb, "wasDrafted": false },
+  { "name": "Brian Robinson Jr.", "team": "SF", "byeWeek": 14, "position": Position.rb, "wasDrafted": false },
   { "name": "TreVeyon Henderson", "team": "NE", "byeWeek": 14, "position": Position.rb, "wasDrafted": false },
   { "name": "RJ Harvey", "team": "DEN", "byeWeek": 12, "position": Position.rb, "wasDrafted": false },
   { "name": "Isiah Pacheco", "team": "KC", "byeWeek": 10, "position": Position.rb, "wasDrafted": false },
@@ -51,5 +51,8 @@ export const runningBacks: PlayerInfo[] = [
   { "name": "Ray Davis", "team": "BUF", "byeWeek": 7, "position": Position.rb, "wasDrafted": false },
   { "name": "Trey Benson", "team": "ARI", "byeWeek": 8, "position": Position.rb, "wasDrafted": false },
   { "name": "Roschon Johnson", "team": "CHI", "byeWeek": 5, "position": Position.rb, "wasDrafted": false },
-  { "name": "Bhayshul Tuten", "team": "JAX", "byeWeek": 8, "position": Position.rb, "wasDrafted": false }
+  { "name": "Bhayshul Tuten", "team": "JAX", "byeWeek": 8, "position": Position.rb, "wasDrafted": false },
+  { "name": "Nick Chubb", "team": "HOU", "byeWeek": 6, "position": Position.rb, "wasDrafted": false },
+  { "name": "Ollie Gordon", "team": "MIA", "byeWeek": 12, "position": Position.rb, "wasDrafted": false },
+  { "name": "Bill Croskey-Merritt", "team": "WAS", "byeWeek": 12, "position": Position.rb, "wasDrafted": false },
 ]
