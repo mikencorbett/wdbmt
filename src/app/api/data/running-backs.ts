@@ -55,4 +55,5 @@ export const runningBacks: PlayerInfo[] = [
   { "name": "Nick Chubb", "team": "HOU", "byeWeek": 6, "position": Position.rb, "wasDrafted": false },
   { "name": "Ollie Gordon", "team": "MIA", "byeWeek": 12, "position": Position.rb, "wasDrafted": false },
   { "name": "Bill Croskey-Merritt", "team": "WAS", "byeWeek": 12, "position": Position.rb, "wasDrafted": false },
+  { "name": "Ja'vonte Williams", "team": "WAS", "byeWeek": 10, "position": Position.rb, "wasDrafted": false },
 ]
