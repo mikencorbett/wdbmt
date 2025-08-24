@@ -1,10 +1,9 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PlayerInfo } from '../../api/player-info';
-import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { NgClass } from '@angular/common';
-import { DragDropService } from '../../api/drag-drop';
-import { MatButton } from '@angular/material/button';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { Position } from '../../api/position';
 
 @Component({
   selector: 'app-player-list',
@@ -22,6 +21,7 @@ export class PlayerList {
   @Input() listId: string = '';
   @Input() connectedListIds: string[] = [];
   @Input() isDraftModeEnabled = false;
+  @Input() activeView: Position = Position.qb;
   @Output() playerDrop = new EventEmitter<CdkDragDrop<PlayerInfo[]>>();
   @Output() playerDrafted = new EventEmitter<PlayerInfo>();
 
@@ -33,4 +33,6 @@ export class PlayerList {
     player.wasDrafted = !player.wasDrafted;
     this.playerDrafted.emit(player);
   }
+
+  protected readonly Position = Position;
 }

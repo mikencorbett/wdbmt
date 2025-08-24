@@ -10,7 +10,12 @@
     <div class="player-list__item" cdkDrag [cdkDragData]="player" [ngClass]="{'player-list__item--drafted': player.wasDrafted && isDraftModeEnabled}">
       <div class="name-container">
         <strong>{{ player.name }}</strong>
-        <span class="name-container--subtitle">{{ player.team }} | BYE {{ player.byeWeek }}</span>
+        <span class="name-container--subtitle">
+          @if (activeView === Position.all) {
+            <span>{{ player.position }} | </span>
+          }
+          {{ player.team }} | BYE {{ player.byeWeek }}
+        </span>
       </div>
       @if (isDraftModeEnabled) {
         <mat-checkbox [checked]="player.wasDrafted" (click)="markPlayerAsDrafted(player)"></mat-checkbox>

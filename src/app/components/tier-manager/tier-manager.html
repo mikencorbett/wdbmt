@@ -19,6 +19,7 @@
           <app-player-list
             [listId]="'tier-' + $index"
             [isDraftModeEnabled]="isDraftModeEnabled"
+            [activeView]="activeCategory"
             [players]="tier.players"
             [connectedListIds]="connectedListIds"
             (playerDrop)="handlePlayerDrop($event)"
